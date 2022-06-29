@@ -52,7 +52,7 @@ public class DynamicProxy {
         }
 
         this.target = target;
-        this.processors = processors;
+        this.processors = new LinkedList<>(processors);
     }
 
     public <T> T getProxy() {
@@ -85,8 +85,7 @@ public class DynamicProxy {
             return;
         }
 
-        List<Processor> list = new LinkedList<>(processors);
-        for (Processor p : list) {
+        for (Processor p : processors) {
             p.beforeInvokeMethod(proxy, method, args);
         }
     }
@@ -96,8 +95,7 @@ public class DynamicProxy {
             return;
         }
 
-        List<Processor> list = new LinkedList<>(processors);
-        for (Processor p : list) {
+        for (Processor p : processors) {
             p.afterInvokeMethod(proxy, method, args);
         }
     }
